@@ -1,0 +1,37 @@
+{
+    // for final_tput_bench_real.py debugging for infercept
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Current File with Arguments",
+            "type": "debugpy", // Using python type for debugging
+            "request": "launch",
+            "program": "${workspaceFolder}/benchmarks/final_tput_bench_real.py", // Path to script from /Infercept/exps
+            "console": "integratedTerminal",
+            "args": [
+                "--load-format",
+                "dummy",
+                "--qps",
+                "1.0",
+                "--msg",
+                "results/6B_1.0_1800_V",
+                "--window",
+                "1800",
+                "--api-policy",
+                "V",
+                "--chunk-fill",
+                "--swap-space",
+                "128",
+                "--exp-json",
+                "merged_exp_uniform.json"
+            ],
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "0" // Set environment variable
+            },
+            "cwd": "${workspaceFolder}/exps" // Set current working directory to /Infercept/exps
+        }
+    ]
+}

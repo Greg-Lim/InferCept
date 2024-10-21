@@ -163,7 +163,7 @@ cython_debug/
 .idea/
 
 # VSCode
-.vscode/
+# .vscode/ # keep this for launch.json
 
 # DS Store
 .DS_Store

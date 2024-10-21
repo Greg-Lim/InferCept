@@ -595,8 +595,8 @@ class SchedulerV2:
         c_h = max(384 - running_batch, 1)
         n = max((self.block_manager.block_size * num_blocks + c_h - 1) // c_h - 1, 0)
         
-        a = 0.0279 # replace f_ch a
-        c = 15.4 # replace f_ch c
+        a = 0.0463 # replace f_ch a
+        c = 10 # replace f_ch c
         f_ch = (a * c_h) / 1000
         f_s = (a * 384 + c) / 1000
         
@@ -735,8 +735,8 @@ class SchedulerV2:
         num_tokens_paused = sum(len(self.block_manager.get_seq_blocks_by_device(group, Device.GPU)) * self.block_manager.block_size for group in paused_seqs)
         # mlimit = max(min(self.scheduler_config.max_num_batched_tokens, num_tokens_paused + initial_free_toks - 1000), 0)
         
-        a = -0.3297119141 # replace t_sin
-        b = 93.994140625 # replace t_offset
+        a = 0.00462 # replace t_sin
+        b = 108.99 # replace t_offset
         c = 1
         mlimit = 384
         t_sin = c * (a * mlimit + b) + initial_free_toks / 2
