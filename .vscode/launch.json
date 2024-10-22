@@ -10,6 +10,8 @@
             "type": "debugpy", // Using python type for debugging
             "request": "launch",
             "program": "${workspaceFolder}/benchmarks/final_tput_bench_real.py", // Path to script from /Infercept/exps
+            "envFile": "/home/yulin/miniconda3/envs/inf",
+            "python": "/home/yulin/miniconda3/envs/inf/bin/python",
             "console": "integratedTerminal",
             "args": [
                 "--load-format",
