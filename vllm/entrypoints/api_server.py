@@ -17,6 +17,8 @@ app = FastAPI()
 engine = None
 import base64, json
 
+# python -m vllm.entrypoints.api_server --model meta-llama/Meta-Llama-3-8B --swap-space 16 --disable-log-requests
+
 
 @app.post("/generate")
 async def generate(request: Request) -> Response:
@@ -41,8 +43,8 @@ async def generate(request: Request) -> Response:
         prompt_token_ids = [0] * int(prompt)
         prompt = None
 
+    
     results_generator = engine.generate(prompt, sampling_params, request_id, prompt_token_ids)
-
     # Streaming case
     async def stream_results() -> AsyncGenerator[bytes, None]:
         async for request_output in results_generator:
@@ -64,6 +66,7 @@ async def generate(request: Request) -> Response:
             await engine.abort(request_id)
             return Response(status_code=499)
         final_output = request_output
+        print(final_output)
 
     assert final_output is not None
     prompt = final_output.prompt
