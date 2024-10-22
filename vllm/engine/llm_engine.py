@@ -417,6 +417,7 @@ class LLMEngine:
                                 last_child_sample.logprobs)
             child_seqs.append((parent, parent))
 
+        print("child_seqs", child_seqs)
         for seq, _ in child_seqs:
             self._decode_sequence(seq, seq_group.sampling_params)
             self._check_stop(seq, seq_group.sampling_params)
@@ -614,6 +615,7 @@ class LLMEngine:
         if scheduler_outputs.is_empty():
             self.iter_times.append((None, None))
             return ignored
+        print("scheduler_outputs", seq_group_metadata_list, scheduler_outputs,ignored)
         
         # Execute the model.
         torch.cuda.nvtx.range_push("model step")
@@ -627,6 +629,7 @@ class LLMEngine:
             blocks_to_swap_out=scheduler_outputs.blocks_to_swap_out,
             blocks_to_copy=scheduler_outputs.blocks_to_copy,
         )
+        print("output", output)
         end.record()
         torch.cuda.nvtx.range_pop()
         self.iter_times.append((start, end))
@@ -728,6 +731,8 @@ class LLMEngine:
     def _check_stop(self, seq: Sequence,
                     sampling_params: SamplingParams) -> None:
         """Stop the finished sequences."""
+        # print("_check_stop", seq.output_text, seq.get_last_token_id(), sampling_params.stop)
+        print("seq id", seq.seq_id, seq.status)
         for stop_str in sampling_params.stop:
             if seq.output_text.endswith(stop_str):
                 if stop_str in get_api_stop_strings():
